@@ -6,7 +6,22 @@
 parameters:
 
 services:
+#    JMS\Serializer\SerializerInterface: '@jms_serializer'
+    app.exception_subscriber:
+        class: App\EventSubscriber\ExceptionListener
+#        arguments:
+#            - '@jms_serializer'
+        tags:
+            - { name: kernel.event_subscriber }
+    app.normalizer.resource_validation_exception:
+        class: App\Normalizer\NotFoundHttpExceptionNormalizer
+        arguments:
+            - { type: 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' }
+        tags:
+            - { name: app.normalizer }
     # default configuration for services in *this* file
+    sensio_framework_extra.view.listener:
+        alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
