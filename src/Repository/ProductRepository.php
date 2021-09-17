@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Product[]    findAll()
  * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductRepository extends ServiceEntityRepository
+class ProductRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -47,4 +47,22 @@ class ProductRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function search($term, $order = 'asc', $limit = 20, $offset = 0)
+    {
+        $qb = $this
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->orderBy('p.name', $order);
+
+        if ($term) {
+            $qb
+                ->where('p.name LIKE ?1')
+                ->setParameter(1, '%' . $term . '%');
+        }
+
+        $array = $qb->getQuery()->getResult();
+
+        return $this->paginate($array, $limit, $offset);
+    }
 }
