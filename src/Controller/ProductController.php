@@ -17,9 +17,6 @@ use Nelmio\ApiDocBundle\Annotation as Doc;
 class ProductController extends AbstractFOSRestController
 {
     /**
-     * @Doc\ApiDoc(
-     *     description="Get the list of all articles."
-     * )
      * @Rest\Get(
      *     path="/products/{id}",
      *     name="app_product_show",
