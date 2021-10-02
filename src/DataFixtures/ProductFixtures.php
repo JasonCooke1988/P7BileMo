@@ -20,43 +20,49 @@ class ProductFixtures extends Fixture
                 'name' => 'Iphone 1',
                 'price' => 100.00,
                 'description' => 'Iphone 1 by Apple',
-                'stock' => 100
+                'stock' => 800
             ],
             [
                 'name' => 'Iphone 2',
                 'price' => 200.00,
                 'description' => 'Iphone 2 by Apple',
-                'stock' => 200
+                'stock' => 700
             ],
             [
                 'name' => 'Iphone 3',
                 'price' => 300.00,
                 'description' => 'Iphone 3 by Apple',
-                'stock' => 300
+                'stock' =>600
             ],
             [
                 'name' => 'Iphone 4',
                 'price' => 400.00,
                 'description' => 'Iphone 4 par Apple',
-                'stock' => 400
+                'stock' => 500
             ],
             [
                 'name' => 'Iphone 5',
                 'price' => 500.00,
                 'description' => 'Iphone 5 par Apple',
-                'stock' => 500
+                'stock' => 400
             ],
             [
                 'name' => 'Iphone 6',
                 'price' => 600.00,
                 'description' => 'Iphone 6 par Apple',
-                'stock' => 600
+                'stock' => 300
+            ],
+            [
+                'name' => 'Iphone 6 plus',
+                'price' => 650.00,
+                'description' => 'Iphone 6 par Apple',
+                'stock' => 200
             ],
             [
                 'name' => 'Iphone 7',
                 'price' => 700.00,
                 'description' => 'Iphone 7 par Apple',
-                'stock' => 700
+                'stock' => 100
             ]
         ];
 

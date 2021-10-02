@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "f9405872-fd48-49fc-a2a1-b969ad256f85",
+		"name": "P7_Bile_MO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"\",\n\t\"price\" : 120.00,\n\t\"description\" :\"Test desc\",\n\t\"stock\" : 300\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/products",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxNjk4NTcsImV4cCI6MTYzMzE3MzQ1Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.CuKCiYcJ5_LsnvcFuofe7dcLaUZcZ6PkH92R9qURv9zpe1UbzxuituU1i0lW68_i414ucBKO9EZVm5KmBRpkcaje6-ScgYfft59InxdXZlziYv_tBjQRaU-dHr4hPAjvt371L2f5c70WHpPGrfUAj07JqZnE_n9EHTfSYa9LTIzamOa2BeRRTcLKmIspUZv8b0oLgb4f1z0cZY-_s7zDmy4R-71IpZrd9ZieXdQjf6tOL8LPgA4BNZbCTS8ERQVUfH-40KW5ic6PCQLyQxNz2tkTXCuR1dBVylgqmpLGE4-boRBjZrMTmog5ESVCOVzjLYCwbAaHh7Opi1SUUu0klg"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products?min_price=400",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "200",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Iphone 6",
+									"disabled": true
+								},
+								{
+									"key": "order_by",
+									"value": "stock",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "min_stock",
+									"value": "400",
+									"disabled": true
+								},
+								{
+									"key": "min_price",
+									"value": "400"
+								},
+								{
+									"key": "max_price",
+									"value": "500",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxMDQ3MjMsImV4cCI6MTYzMzEwODMyMywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.FDDBxtJUT86_XiOaw4Sqo9mCQi_7S-H6bKsWrvjQeyjvzez62oKrXxizWIUBWubzCvDScLuEV1Q0Aa35JOefn7nVXYlydIpMAru76tRp0kz8Zbr3hQM9gZv1dExVkne0mSobgbCT8iWlRzMzhz8BLC5Rbr0W1XB-xDXXej6K2T9lcHYrMWerdWly_7lau5obCbtGrY03cGxIYGFdaZU_VWqZkB6f5Hz4wzoZxcnq7NSPS2s1wGivvE1qaZ0SkOHyzt7EnQp7Zc9T2ah0VJAX3gZdleMaYPx5YK6PvcMr6jEdCSkrb9DY9-AYrQoAshoWwCc0piQU9bjszJgLBhRbsQ"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxNjk4NTcsImV4cCI6MTYzMzE3MzQ1Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.CuKCiYcJ5_LsnvcFuofe7dcLaUZcZ6PkH92R9qURv9zpe1UbzxuituU1i0lW68_i414ucBKO9EZVm5KmBRpkcaje6-ScgYfft59InxdXZlziYv_tBjQRaU-dHr4hPAjvt371L2f5c70WHpPGrfUAj07JqZnE_n9EHTfSYa9LTIzamOa2BeRRTcLKmIspUZv8b0oLgb4f1z0cZY-_s7zDmy4R-71IpZrd9ZieXdQjf6tOL8LPgA4BNZbCTS8ERQVUfH-40KW5ic6PCQLyQxNz2tkTXCuR1dBVylgqmpLGE4-boRBjZrMTmog5ESVCOVzjLYCwbAaHh7Opi1SUUu0klg"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=2.0"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users?name=Jason Cooke",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Jason Cooke"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Create client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Jason\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/clients",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read client",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxMDIxMzQsImV4cCI6MTYzMzEwNTczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.ZR-l5G1MrsGCT5cVd-_GkeDY2CSUbANP1HHZkEYP3pqDa88NXnXYZoKAORnfFozDuKrHPahw7xf0ySbp2l1E_NHCOr4KIKSsOCr8Ow1sws8mQkAAPy33WME7ZGWQv5qoQ-wSt768d2V1TyNSGX6AOPhY0hVRyvMWnxWUhuQX7t7s4l7EOr7KZla0TvXGYygV7_0gqIiGBZYp5DpRZMLRm7y2TURhCM6GIRR2YP_n6ac-0vCR9aFxGGrkFJjsZN3wkIKtRjbKbKh0L5EtvgHM6jIaD0_j-tobS0Mgf0c4Ii01d_Gp3oUGvnD3ZuKgYKS67EJURfgEmYfjSO2SnUgPFw"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/Users",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"Users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Token JWT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"Amazon\",\n\t\"password\" : \"test\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/login_check",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

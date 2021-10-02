@@ -5,15 +5,13 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
 
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *
- * @Hateoas\Relation(
- *     "client",
- *     embedded = @Hateoas\Embedded("expr(object.getClient())")
- * )
+ * @ExclusionPolicy("all")
  */
 class User
 {
@@ -25,6 +23,8 @@ class User
     private $id;
 
     /**
+     * @Serializer\Expose()
+     * @Serializer\Since("1.0")
      * @ORM\Column(type="string", length=255)
      */
     private $name;

@@ -6,7 +6,11 @@
 parameters:
 
 services:
-#    JMS\Serializer\SerializerInterface: '@jms_serializer'
+    tenant_user_service:
+        class: App\Token\ClientService
+        arguments: [ '@security.token_storage' ]
+
+    #    JMS\Serializer\SerializerInterface: '@jms_serializer'
     app.exception_subscriber:
         class: App\EventSubscriber\ExceptionListener
 #        arguments:
