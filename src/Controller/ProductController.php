@@ -2,82 +2,57 @@
 
 namespace App\Controller;
 
-use App\Entity\Product;
-use App\Exception\ResourceValidationException;
 use App\Representation\Products;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Validator\ConstraintViolationList;
-use Nelmio\ApiDocBundle\Annotation as Doc;
-
-
 
 class ProductController extends AbstractFOSRestController
 {
-    /**
-     * @Rest\Get(
-     *     path="/products/{id}",
-     *     name="app_product_show",
-     *     requirements={"id"="\d+"}
-     * )
-     * @Rest\View()
-     */
-    public function showAction(Product $product): Product
-    {
-        return $product;
-    }
-
 
     /**
-     * @Rest\Post(
-     *     path="/products",
-     *     name="app_product_create"
-     * )
-     * @Rest\View(statusCode = 201)
-     * @ParamConverter(
-     *     "product",
-     *     converter="fos_rest.request_body",
-     *     options={
-     *          "validator"={"groups"="Create"}
-     *     })
-     * @throws ResourceValidationException
-     */
-    public function createAction(Product $product, ConstraintViolationList $violations)
-    {
-
-        if (count($violations)) {
-            $message = 'The JSON sent contains invalid data. Here are the errors you need to correct :';
-
-            foreach ($violations as $violation) {
-                $message .= sprintf('Field %s: %s ', $violation->getPropertyPath(), $violation->getMessage());
-            }
-
-            throw new ResourceValidationException($message);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $em->persist($product);
-        $em->flush();
-
-        return $product;
-    }
-
-    /**
-     * @Rest\Get("/products", name="app_product_list")
+     * @Rest\Get("/api/products", name="app_product_list")
      * @Rest\QueryParam(
-     *     name="keyword",
-     *     requirements="[a-zA-Z0-9]*",
+     *     name="name",
+     *     requirements="[a-zA-Z 0-9]+",
      *     nullable=true,
-     *     description="The keyword to search for."
+     *     description="The name to search for."
      * )
      * @Rest\QueryParam(
      *     name="order",
      *     requirements="asc|desc",
      *     default="asc",
      *     description="Sort order (asc or desc)"
+     * )
+     * @Rest\QueryParam(
+     *     name="order_by",
+     *     requirements="[a-zA-Z 0-9]+",
+     *     default="name",
+     *     description="Sort order by this value."
+     * )
+     *@Rest\QueryParam(
+     *     name="min_price",
+     *     requirements="\d+",
+     *     description="Products mast have a price of minimum this value."
+     * )
+     *@Rest\QueryParam(
+     *     name="max_price",
+     *     requirements="\d+",
+     *     description="Products mast have a price of maximum this value."
+     * )
+     *@Rest\QueryParam(
+     *     name="price",
+     *     requirements="\d+",
+     *     description="The price to search for."
+     * )
+     *@Rest\QueryParam(
+     *     name="min_stock",
+     *     requirements="\d+",
+     *     description="Products mast have a stock of minimum this value."
+     * )*@Rest\QueryParam(
+     *     name="max_stock",
+     *     requirements="\d+",
+     *     description="Products mast have a stock of maximum this value."
      * )
      * @Rest\QueryParam(
      *     name="limit",
@@ -96,8 +71,18 @@ class ProductController extends AbstractFOSRestController
     public function listAction(ParamFetcherInterface $paramFetcher): Products
     {
 
+        $keywords = array(
+            'name' => $paramFetcher->get('name'),
+            'price' => $paramFetcher->get('price'),
+            'min_price' => $paramFetcher->get('min_price'),
+            'max_price' => $paramFetcher->get('max_price'),
+            'min_stock' => $paramFetcher->get('min_stock'),
+            'max_stock' => $paramFetcher->get('max_stock'),
+        );
+
         $pager = $this->getDoctrine()->getRepository('App:Product')->search(
-            $paramFetcher->get('keyword'),
+            $keywords,
+            $paramFetcher->get('order_by'),
             $paramFetcher->get('order'),
             $paramFetcher->get('limit'),
             $paramFetcher->get('offset')

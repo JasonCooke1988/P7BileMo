@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Client;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ClientFixtures extends Fixture
 {
@@ -15,6 +16,15 @@ class ClientFixtures extends Fixture
     public const EBAY_CLIENT_REFERENCE = "ebay-client";
     public const LECLERC_CLIENT_REFERENCE = "leclerc-client";
     public const ORANGE_CLIENT_REFERENCE = "orange-client";
+
+    private $passwordHasher;
+
+
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
+
 
     /**
      * @inheritDoc
@@ -43,7 +53,8 @@ class ClientFixtures extends Fixture
         foreach($args as $elt) {
             $client = new Client();
 
-            $client->setName($elt['name']);
+            $client->setUsername($elt['name']);
+            $client->setPassword($this->passwordHasher->hashPassword($client,'test'));
             $client->setCreatedAt(new \DateTimeImmutable());
             $this->addReference($elt['ref'], $client);
 
@@ -52,4 +63,5 @@ class ClientFixtures extends Fixture
 
         $manager->flush();
     }
+
 }

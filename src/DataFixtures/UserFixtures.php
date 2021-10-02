@@ -49,11 +49,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 'client' => $leclerc
             ],
             [
-                'name' => 'Natalie Vedel',
-                'client' => $orange
-            ],
-            [
-                'name' => 'Jason Cooke',
+                'name' => 'Nathalie Vedel',
                 'client' => $orange
             ]
         ];
