@@ -64,17 +64,18 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     protected function paginate(array $array, $limit = 20, $offset = 0)
     {
+
         if (0 == $limit || 0 == $offset) {
             throw new \LogicException('$limit & $offset mst be greater than 0.');
         }
 
         $pager = new Pagerfanta(new ArrayAdapter($array));
         $currentPage = ceil(($offset + 1) / $limit);
-        $pager->setCurrentPage($currentPage);
+
         $pager->setMaxPerPage((int)$limit);
+        $pager->setCurrentPage($currentPage);
 
         return $pager;
-
     }
 
 }

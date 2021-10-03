@@ -6,12 +6,13 @@ use App\Representation\Products;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 class ProductController extends AbstractFOSRestController
 {
 
     /**
-     * @Rest\Get("/api/products", name="app_product_list")
+     * @Rest\Get("/api/products", name="app_product_show")
      * @Rest\QueryParam(
      *     name="name",
      *     requirements="[a-zA-Z 0-9]+",
@@ -30,26 +31,27 @@ class ProductController extends AbstractFOSRestController
      *     default="name",
      *     description="Sort order by this value."
      * )
-     *@Rest\QueryParam(
+     * @Rest\QueryParam(
      *     name="min_price",
      *     requirements="\d+",
      *     description="Products mast have a price of minimum this value."
      * )
-     *@Rest\QueryParam(
+     * @Rest\QueryParam(
      *     name="max_price",
      *     requirements="\d+",
      *     description="Products mast have a price of maximum this value."
      * )
-     *@Rest\QueryParam(
+     * @Rest\QueryParam(
      *     name="price",
      *     requirements="\d+",
      *     description="The price to search for."
      * )
-     *@Rest\QueryParam(
+     * @Rest\QueryParam(
      *     name="min_stock",
      *     requirements="\d+",
      *     description="Products mast have a stock of minimum this value."
-     * )*@Rest\QueryParam(
+     * )
+     * @Rest\QueryParam(
      *     name="max_stock",
      *     requirements="\d+",
      *     description="Products mast have a stock of maximum this value."
@@ -68,7 +70,7 @@ class ProductController extends AbstractFOSRestController
      * )
      * @Rest\View()
      */
-    public function listAction(ParamFetcherInterface $paramFetcher): Products
+    public function showAction(ParamFetcherInterface $paramFetcher): Products
     {
 
         $keywords = array(
