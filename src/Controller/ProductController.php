@@ -6,7 +6,6 @@ use App\Representation\Products;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
-use Hateoas\Configuration\Annotation as Hateoas;
 
 class ProductController extends AbstractFOSRestController
 {
@@ -60,7 +59,7 @@ class ProductController extends AbstractFOSRestController
      *     name="limit",
      *     requirements="\d+",
      *     default="15",
-     *     description="Max number of movies per page."
+     *     description="Max number of products per page."
      * )
      * @Rest\QueryParam(
      *     name="offset",
@@ -68,7 +67,7 @@ class ProductController extends AbstractFOSRestController
      *     default="1",
      *     description="The pagination offset"
      * )
-     * @Rest\View()
+     * @Rest\View(statusCode = 200)
      */
     public function showAction(ParamFetcherInterface $paramFetcher): Products
     {

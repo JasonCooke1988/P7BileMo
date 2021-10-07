@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 
+use App\Entity\Client;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
@@ -11,7 +12,7 @@ use Pagerfanta\Pagerfanta;
 abstract class AbstractRepository extends ServiceEntityRepository
 {
 
-    public function search($terms, $orderBy, $order, $limit, $offset): Pagerfanta
+    public function search($terms, $orderBy, $order, $limit, $offset, $client = null): Pagerfanta
     {
         $qb = $this
             ->createQueryBuilder('e')
@@ -54,7 +55,14 @@ abstract class AbstractRepository extends ServiceEntityRepository
             }
         }
 
-//        dd($qb->getQuery());
+        /** @var Client $client */
+        if (is_a($client, Client::class) && $i === 0) {
+            $qb->where('e.client = :c')
+                ->setParameter('c', $client);
+        } elseif (is_a($client, Client::class) && $i != 0) {
+            $qb->andWhere('e.client = :c')
+                ->setParameter('c', $client);
+        }
 
         $array = $qb->getQuery()->getResult();
 
@@ -62,7 +70,7 @@ abstract class AbstractRepository extends ServiceEntityRepository
     }
 
 
-    protected function paginate(array $array, $limit = 20, $offset = 0)
+    protected function paginate(array $array, $limit = 20, $offset = 0): Pagerfanta
     {
 
         if (0 == $limit || 0 == $offset) {

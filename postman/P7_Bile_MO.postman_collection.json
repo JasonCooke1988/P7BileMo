@@ -9,56 +9,21 @@
 			"name": "Products",
 			"item": [
 				{
-					"name": "Create product",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "",
-								"value": ""
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"\",\n\t\"price\" : 120.00,\n\t\"description\" :\"Test desc\",\n\t\"stock\" : 300\n}"
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/products",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Read products",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"key": "",
-								"value": ""
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMyNDgxMzgsImV4cCI6MTYzMzI1MTczOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.yvfa1_0gqAd2wgNFSVwzwTxEyugIZecCl2bk8j2EIUTJb6ZRG7O-yJi23BF9AoCL4bkgPQ3GI00o4NbVG-uLQ1CK61kPqALIbd10eWDHeYATIx65KsPrPFjvlyTYMwOPnLTzsUV6JmOAwSqF5IhJJHE6tBFlPCKWzyWwECGhHhu8p2LxY0vcs7TNF7uJH6pa-OUTx4cjoeBgsz4FW_CoYwX_aYPwynI0CfOOJwveCWNQkkh0ye4x4isXJGQcZ3bMkgGHcE2ZMbX_sFsRLCPYTJFmdWI0DfcexQ4Uy2xt06yIdkRNaLlUWKwjk2xdkZrKgkujXJGydeYn3XlpSs0IDg"
 							},
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxNjk4NTcsImV4cCI6MTYzMzE3MzQ1Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.CuKCiYcJ5_LsnvcFuofe7dcLaUZcZ6PkH92R9qURv9zpe1UbzxuituU1i0lW68_i414ucBKO9EZVm5KmBRpkcaje6-ScgYfft59InxdXZlziYv_tBjQRaU-dHr4hPAjvt371L2f5c70WHpPGrfUAj07JqZnE_n9EHTfSYa9LTIzamOa2BeRRTcLKmIspUZv8b0oLgb4f1z0cZY-_s7zDmy4R-71IpZrd9ZieXdQjf6tOL8LPgA4BNZbCTS8ERQVUfH-40KW5ic6PCQLyQxNz2tkTXCuR1dBVylgqmpLGE4-boRBjZrMTmog5ESVCOVzjLYCwbAaHh7Opi1SUUu0klg"
+								"key": "Accept",
+								"value": "application/json;version=1.0"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/products?min_price=400",
+							"raw": "http://127.0.0.1:8000/api/products",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -99,11 +64,22 @@
 								},
 								{
 									"key": "min_price",
-									"value": "400"
+									"value": "400",
+									"disabled": true
 								},
 								{
 									"key": "max_price",
 									"value": "500",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "5",
 									"disabled": true
 								}
 							]
@@ -123,7 +99,12 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxMDQ3MjMsImV4cCI6MTYzMzEwODMyMywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.FDDBxtJUT86_XiOaw4Sqo9mCQi_7S-H6bKsWrvjQeyjvzez62oKrXxizWIUBWubzCvDScLuEV1Q0Aa35JOefn7nVXYlydIpMAru76tRp0kz8Zbr3hQM9gZv1dExVkne0mSobgbCT8iWlRzMzhz8BLC5Rbr0W1XB-xDXXej6K2T9lcHYrMWerdWly_7lau5obCbtGrY03cGxIYGFdaZU_VWqZkB6f5Hz4wzoZxcnq7NSPS2s1wGivvE1qaZ0SkOHyzt7EnQp7Zc9T2ah0VJAX3gZdleMaYPx5YK6PvcMr6jEdCSkrb9DY9-AYrQoAshoWwCc0piQU9bjszJgLBhRbsQ"
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2MjAxNDksImV4cCI6MTYzMzYyMzc0OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.SFS-4MirQ-HAy3_uLF0qFWSYLB-7WRj93aN88rax8tD_REygLj86Szk7nxkHyaXF0MFuRiNjBGHMIID-eLzoc7ZzFSzg3FF6XWiAqoulz262co2gCx_3UHwFci5BpgoFVimeibZaVL9cx7k4a-3s9Zg3OTwdLeTXYObRi5crSDMdZaXLbzlC0pqcPt0k8VHkXND8zwm3vUnUGZ_g0A6wxrUVYIINqhReWXwaTSHBHpjywHZve_4RinLV38OjZU5LrTO2qhr7amuWeiw6PxFR2G-Yi57a7fPD5hHOEI7Ji4tatBRWVRHLjMAQWWYCcix88F77-BIqziEWemK7RLJkKQ"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0",
+								"type": "text"
 							}
 						],
 						"url": {
@@ -152,15 +133,16 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxNjk4NTcsImV4cCI6MTYzMzE3MzQ1Nywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.CuKCiYcJ5_LsnvcFuofe7dcLaUZcZ6PkH92R9qURv9zpe1UbzxuituU1i0lW68_i414ucBKO9EZVm5KmBRpkcaje6-ScgYfft59InxdXZlziYv_tBjQRaU-dHr4hPAjvt371L2f5c70WHpPGrfUAj07JqZnE_n9EHTfSYa9LTIzamOa2BeRRTcLKmIspUZv8b0oLgb4f1z0cZY-_s7zDmy4R-71IpZrd9ZieXdQjf6tOL8LPgA4BNZbCTS8ERQVUfH-40KW5ic6PCQLyQxNz2tkTXCuR1dBVylgqmpLGE4-boRBjZrMTmog5ESVCOVzjLYCwbAaHh7Opi1SUUu0klg"
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2MjAxNDksImV4cCI6MTYzMzYyMzc0OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.SFS-4MirQ-HAy3_uLF0qFWSYLB-7WRj93aN88rax8tD_REygLj86Szk7nxkHyaXF0MFuRiNjBGHMIID-eLzoc7ZzFSzg3FF6XWiAqoulz262co2gCx_3UHwFci5BpgoFVimeibZaVL9cx7k4a-3s9Zg3OTwdLeTXYObRi5crSDMdZaXLbzlC0pqcPt0k8VHkXND8zwm3vUnUGZ_g0A6wxrUVYIINqhReWXwaTSHBHpjywHZve_4RinLV38OjZU5LrTO2qhr7amuWeiw6PxFR2G-Yi57a7fPD5hHOEI7Ji4tatBRWVRHLjMAQWWYCcix88F77-BIqziEWemK7RLJkKQ"
 							},
 							{
 								"key": "Accept",
-								"value": "application/json;version=2.0"
+								"value": "application/json;version=1.0",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/users?name=Jason Cooke",
+							"raw": "http://127.0.0.1:8000/api/users/24",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -171,13 +153,88 @@
 							"port": "8000",
 							"path": [
 								"api",
-								"users"
+								"users",
+								"24"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM1OTU5MjAsImV4cCI6MTYzMzU5OTUyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.aVcE2l362s63lZVCQrEZCuRzEGH6_pIpGGGdyI4UbJAdibK4UsdCzE_1g4LCcvE0KNMgNXEhrV-VPm4mqDLimuGRQWDWXbXk1gLLM0F2QZy2_Lu3ryFNo5dLR6DjCeB33rLESYp5G65yJmGSeZCBv_3y6Y91pTUlAPwwOa0dMFe2PxZMm8WOrsP4OgZUQHhJmGP-xYRtFipoiCbcIr5n2avGXr9GRtlUlHomNpO6i517tGP58KkBRDza8T0L7iFe8N753LbeVxyp8w9goqaAsCRL_5VXj5WShb0w7jJp-330oggU8O_JA3GSn1M2BRbroAsqciBDpw90NWynzo94gQ",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Test user\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/create",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
 							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Jason Cooke"
-								}
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM1OTgzMjMsImV4cCI6MTYzMzYwMTkyMywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.UKZJiArizXP8R7tRX1h1uPbh7oO-umTvJmApRwu4OBkFfSZSa20kDxX7mXHTRSp5ZN_NK2psFu3IFqbGIKdCFWkfr-4ariQM8lkOrwHUNzLK1iu1I8kIH7veOszcntF1jYqV8RNi2YfZQ2Nb37g4iwLtDNh1okwi-jNxk_w4Z1tCIkiR2-N7mM_XhuXw2P4oNhISuUimqjbPV2UXsgEeRsoAaMY6_I9DsqxnWamY6fDfwEIwKSnt_8xtATj2p0PEMyaUGt_oDSp3B8k4JA6YbRtSAXCgCPXFCOuP7VfKmEyushVYGRxqITtMWWBJnnbKEwKI8yyLhKrmjSlRuNRj0w",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/users/delete/22",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								"22"
 							]
 						}
 					},
@@ -186,13 +243,18 @@
 			]
 		},
 		{
-			"name": "Clients",
+			"name": "Get JWT",
 			"item": [
 				{
-					"name": "Create client",
+					"name": "Token JWT (Amazon)",
 					"request": {
 						"method": "POST",
 						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0",
+								"type": "text"
+							},
 							{
 								"key": "Content-Type",
 								"value": "application/json"
@@ -200,10 +262,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\" : \"Jason\"\n}"
+							"raw": "{\n\t\"username\" : \"Amazon\",\n\t\"password\" : \"test\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/clients",
+							"raw": "http://127.0.0.1:8000/api/login_check",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -213,72 +275,14 @@
 							],
 							"port": "8000",
 							"path": [
-								"clients"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read client",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMxMDIxMzQsImV4cCI6MTYzMzEwNTczNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.ZR-l5G1MrsGCT5cVd-_GkeDY2CSUbANP1HHZkEYP3pqDa88NXnXYZoKAORnfFozDuKrHPahw7xf0ySbp2l1E_NHCOr4KIKSsOCr8Ow1sws8mQkAAPy33WME7ZGWQv5qoQ-wSt768d2V1TyNSGX6AOPhY0hVRyvMWnxWUhuQX7t7s4l7EOr7KZla0TvXGYygV7_0gqIiGBZYp5DpRZMLRm7y2TURhCM6GIRR2YP_n6ac-0vCR9aFxGGrkFJjsZN3wkIKtRjbKbKh0L5EtvgHM6jIaD0_j-tobS0Mgf0c4Ii01d_Gp3oUGvnD3ZuKgYKS67EJURfgEmYfjSO2SnUgPFw"
-							}
-						],
-						"url": {
-							"raw": "http://127.0.0.1:8000/Users",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"Users"
+								"api",
+								"login_check"
 							]
 						}
 					},
 					"response": []
 				}
 			]
-		},
-		{
-			"name": "Token JWT",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"username\" : \"Amazon\",\n\t\"password\" : \"test\"\n}"
-				},
-				"url": {
-					"raw": "http://127.0.0.1:8000/api/login_check",
-					"protocol": "http",
-					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"login_check"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }

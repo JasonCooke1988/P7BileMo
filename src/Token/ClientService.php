@@ -14,11 +14,9 @@ class ClientService
     private $tokenStorage;
 
     /**
-     * @param TokenStorageInterface  $storage
+     * @param TokenStorageInterface $storage
      */
-    public function __construct(
-        TokenStorageInterface $storage
-    )
+    public function __construct(TokenStorageInterface $storage)
     {
         $this->tokenStorage = $storage;
     }

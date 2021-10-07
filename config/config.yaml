@@ -1,1 +1,5 @@
 nelmio_api_doc: ~
+
+framework:
+  serializer:
+    enabled: true
