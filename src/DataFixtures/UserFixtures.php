@@ -26,31 +26,59 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $args = [
             [
                 'name' => 'Jason Cooke',
-                'client' => $amazon
+                'client' => $amazon,
+                'adresse' => '1 Rue du chateau',
+                'city' => 'Valence',
+                'email' => 'jason.cooke@gmail.com',
+                'postCode' => '47500'
             ],
             [
                 'name' => 'Stella Cooke',
-                'client' => $amazon
+                'client' => $amazon,
+                'adresse' => '1 Rue du billeton',
+                'city' => 'Lyon',
+                'email' => 'stella.cooke@gmail.com',
+                'postCode' => '45300'
             ],
             [
                 'name' => 'Peter Cooke',
-                'client' => $ebay
+                'client' => $ebay,
+                'adresse' => '6 avenue de la boulangerie',
+                'city' => 'Agen',
+                'email' => 'peter.cooke@gmail.com',
+                'postCode' => '63500'
             ],
             [
                 'name' => 'Lindsay Cooke',
-                'client' => $ebay
+                'client' => $ebay,
+                'adresse' => '40 boulevard des oies',
+                'city' => 'St. Etienne',
+                'email' => 'lindsay.cooke@gmail.com',
+                'postCode' => '87500'
             ],
             [
                 'name' => 'Jordan Allesant',
-                'client' => $leclerc
+                'client' => $leclerc,
+                'adresse' => '1 Rue du chat',
+                'city' => 'Aubenas',
+                'email' => 'jordan.allesant@gmail.com',
+                'postCode' => '90500'
             ],
             [
                 'name' => 'Angie Allesant',
-                'client' => $leclerc
+                'client' => $leclerc,
+                'adresse' => '40 Rue du bord de rivière',
+                'city' => 'Bordeaux',
+                'email' => 'angie.allesant@gmail.com',
+                'postCode' => '47500'
             ],
             [
                 'name' => 'Nathalie Vedel',
-                'client' => $orange
+                'client' => $orange,
+                'adresse' => '1 Rue du moulin',
+                'city' => 'Paris',
+                'email' => 'nathalie.vedel@gmail.com',
+                'postCode' => '75500'
             ]
         ];
 
@@ -59,6 +87,10 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 
             $user->setName($elt['name']);
             $user->setClient($elt['client']);
+            $user->setAdresse($elt['adresse']);
+            $user->setCity($elt['city']);
+            $user->setEmail($elt['email']);
+            $user->setPostCode($elt['postCode']);
             $user->setCreatedAt(new \DateTimeImmutable());
 
             $manager->persist($user);

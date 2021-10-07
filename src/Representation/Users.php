@@ -5,11 +5,13 @@ namespace App\Representation;
 
 use JMS\Serializer\Annotation as Serializer;
 use Pagerfanta\Pagerfanta;
+
 class Users
 {
     /**
      * @var Pagerfanta
      * @Serializer\Type("array<App\Entity\User>")
+     * @Serializer\Groups({"list"})
      */
     public $data;
 
