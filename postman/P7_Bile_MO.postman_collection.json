@@ -9,13 +9,13 @@
 			"name": "Products",
 			"item": [
 				{
-					"name": "Read products",
+					"name": "List products",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzMyNDgxMzgsImV4cCI6MTYzMzI1MTczOCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.yvfa1_0gqAd2wgNFSVwzwTxEyugIZecCl2bk8j2EIUTJb6ZRG7O-yJi23BF9AoCL4bkgPQ3GI00o4NbVG-uLQ1CK61kPqALIbd10eWDHeYATIx65KsPrPFjvlyTYMwOPnLTzsUV6JmOAwSqF5IhJJHE6tBFlPCKWzyWwECGhHhu8p2LxY0vcs7TNF7uJH6pa-OUTx4cjoeBgsz4FW_CoYwX_aYPwynI0CfOOJwveCWNQkkh0ye4x4isXJGQcZ3bMkgGHcE2ZMbX_sFsRLCPYTJFmdWI0DfcexQ4Uy2xt06yIdkRNaLlUWKwjk2xdkZrKgkujXJGydeYn3XlpSs0IDg"
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg"
 							},
 							{
 								"key": "Accept",
@@ -86,6 +86,86 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Read product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/products/32",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"products",
+								"32"
+							],
+							"query": [
+								{
+									"key": "price",
+									"value": "200",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Iphone 6",
+									"disabled": true
+								},
+								{
+									"key": "order_by",
+									"value": "stock",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"disabled": true
+								},
+								{
+									"key": "min_stock",
+									"value": "400",
+									"disabled": true
+								},
+								{
+									"key": "min_price",
+									"value": "400",
+									"disabled": true
+								},
+								{
+									"key": "max_price",
+									"value": "500",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -99,7 +179,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2MjAxNDksImV4cCI6MTYzMzYyMzc0OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.SFS-4MirQ-HAy3_uLF0qFWSYLB-7WRj93aN88rax8tD_REygLj86Szk7nxkHyaXF0MFuRiNjBGHMIID-eLzoc7ZzFSzg3FF6XWiAqoulz262co2gCx_3UHwFci5BpgoFVimeibZaVL9cx7k4a-3s9Zg3OTwdLeTXYObRi5crSDMdZaXLbzlC0pqcPt0k8VHkXND8zwm3vUnUGZ_g0A6wxrUVYIINqhReWXwaTSHBHpjywHZve_4RinLV38OjZU5LrTO2qhr7amuWeiw6PxFR2G-Yi57a7fPD5hHOEI7Ji4tatBRWVRHLjMAQWWYCcix88F77-BIqziEWemK7RLJkKQ"
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg"
 							},
 							{
 								"key": "Accept",
@@ -108,7 +188,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/users/",
+							"raw": "http://127.0.0.1:8000/api/users",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -119,6 +199,41 @@
 							"port": "8000",
 							"path": [
 								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users by client",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json;version=1.0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/client/18/users/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"client",
+								"18",
 								"users",
 								""
 							]
@@ -133,7 +248,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2MjAxNDksImV4cCI6MTYzMzYyMzc0OSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.SFS-4MirQ-HAy3_uLF0qFWSYLB-7WRj93aN88rax8tD_REygLj86Szk7nxkHyaXF0MFuRiNjBGHMIID-eLzoc7ZzFSzg3FF6XWiAqoulz262co2gCx_3UHwFci5BpgoFVimeibZaVL9cx7k4a-3s9Zg3OTwdLeTXYObRi5crSDMdZaXLbzlC0pqcPt0k8VHkXND8zwm3vUnUGZ_g0A6wxrUVYIINqhReWXwaTSHBHpjywHZve_4RinLV38OjZU5LrTO2qhr7amuWeiw6PxFR2G-Yi57a7fPD5hHOEI7Ji4tatBRWVRHLjMAQWWYCcix88F77-BIqziEWemK7RLJkKQ"
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg"
 							},
 							{
 								"key": "Accept",
@@ -142,7 +257,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/users/24",
+							"raw": "http://127.0.0.1:8000/api/users/31",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -154,7 +269,7 @@
 							"path": [
 								"api",
 								"users",
-								"24"
+								"31"
 							]
 						}
 					},
@@ -167,7 +282,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM1OTU5MjAsImV4cCI6MTYzMzU5OTUyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.aVcE2l362s63lZVCQrEZCuRzEGH6_pIpGGGdyI4UbJAdibK4UsdCzE_1g4LCcvE0KNMgNXEhrV-VPm4mqDLimuGRQWDWXbXk1gLLM0F2QZy2_Lu3ryFNo5dLR6DjCeB33rLESYp5G65yJmGSeZCBv_3y6Y91pTUlAPwwOa0dMFe2PxZMm8WOrsP4OgZUQHhJmGP-xYRtFipoiCbcIr5n2avGXr9GRtlUlHomNpO6i517tGP58KkBRDza8T0L7iFe8N753LbeVxyp8w9goqaAsCRL_5VXj5WShb0w7jJp-330oggU8O_JA3GSn1M2BRbroAsqciBDpw90NWynzo94gQ",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg",
 								"type": "text"
 							},
 							{
@@ -183,10 +298,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" : \"Test user\"\r\n}"
+							"raw": "{\r\n    \"name\" : \"Test user new again\",\r\n    \"adresse\" : \"adresse\",\r\n    \"city\" : \"city\",\r\n    \"email\" : \"email@email.com\",\r\n    \"post_code\" : \"2300\"\r\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/users/create",
+							"raw": "http://127.0.0.1:8000/api/client/20/users/create",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -197,6 +312,8 @@
 							"port": "8000",
 							"path": [
 								"api",
+								"client",
+								"20",
 								"users",
 								"create"
 							]
@@ -211,7 +328,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM1OTgzMjMsImV4cCI6MTYzMzYwMTkyMywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.UKZJiArizXP8R7tRX1h1uPbh7oO-umTvJmApRwu4OBkFfSZSa20kDxX7mXHTRSp5ZN_NK2psFu3IFqbGIKdCFWkfr-4ariQM8lkOrwHUNzLK1iu1I8kIH7veOszcntF1jYqV8RNi2YfZQ2Nb37g4iwLtDNh1okwi-jNxk_w4Z1tCIkiR2-N7mM_XhuXw2P4oNhISuUimqjbPV2UXsgEeRsoAaMY6_I9DsqxnWamY6fDfwEIwKSnt_8xtATj2p0PEMyaUGt_oDSp3B8k4JA6YbRtSAXCgCPXFCOuP7VfKmEyushVYGRxqITtMWWBJnnbKEwKI8yyLhKrmjSlRuNRj0w",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MzM2ODI4MjEsImV4cCI6MTYzNjI3NDgyMSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoiQW1hem9uIn0.gXpK2sutca4InKJakeXRPZqfc3cRgbvKsnQdW5xrAYKVNH657YD0ngviNQl4SNS0IKDxx_FM0ICS8Y_Wuyp64J3KbLdnwwvUnQ65a-RZkXbtZlyw7Zzh7EX07FQwUgjRtQTJc0evTvyk_1ZQIazeOSj6JLJP-Ji-6lA0_QVhqgg7x2tkSOoWemMEc9aAaIqQYbUXPK9k7TXQuOVDG2X7UoRo1MsugXPWtvnO1keCyRiILr6wcA17mk4Fk9JHZshxB9yJJ_ZhRCvZjlhnjjh9aaKclpJB_x1boajlYra3k7gZoM0Nc5JkNIWIHFOcaVT7mfH678xyGPhdXeQezytxLg",
 								"type": "text"
 							},
 							{
@@ -221,7 +338,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/users/delete/22",
+							"raw": "http://127.0.0.1:8000/api/users/delete/42",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -234,7 +351,7 @@
 								"api",
 								"users",
 								"delete",
-								"22"
+								"42"
 							]
 						}
 					},
