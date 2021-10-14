@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 
@@ -14,36 +15,72 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ExclusionPolicy("all")
  * @Hateoas\Relation (
+ *     "list",
+ *     href = @Hateoas\Route(
+ *          "app_user_list",
+ *          absolute = true
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","listClient"})
+ * )
+ * @Hateoas\Relation (
+ *     "listByClient",
+ *     href = @Hateoas\Route(
+ *          "app_client_user_list",
+ *          parameters={"id" = "expr(object.getClient().getId())"},
+ *          absolute = true
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list"})
+ * )
+ * @Hateoas\Relation (
  *     "self",
  *     href = @Hateoas\Route(
  *          "app_user_show",
+ *          parameters={"id" = "expr(object.getId())"},
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"list","detail","listClient"}),
+ * )
+ * @Hateoas\Relation (
+ *     "delete",
+ *     href = @Hateoas\Route(
+ *          "app_user_delete",
+ *          parameters={"id" = "expr(object.getId())"},
+ *          absolute = true
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"list","detail","listClient"})
  * )
  * @Hateoas\Relation (
  *     "create",
  *     href = @Hateoas\Route(
  *          "app_user_create",
- *          absolute = true
- *      )
+ *          absolute = true,
+ *          parameters={"id" = "expr(object.getClient().getId())"},
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient"})
+ * )
+ * @Hateoas\Relation (
+ *     "client",
+ *     embedded = "expr(object.getClient())",
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient"})
  * )
  */
 class User
 {
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"list", "details"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list","listClient","detail"})
+     * @Serializer\Since("1.0")
      */
     private $id;
 
     /**
-     * @Serializer\Expose()
-     * @Serializer\Groups({"list", "details"})
-     * @Serializer\Since("1.0")
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list","listClient","detail"})
+     * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
     private $name;
@@ -51,6 +88,8 @@ class User
     /**
      * @ORM\ManyToOne(targetEntity=client::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Serializer\Expose()
+     * @Serializer\Since("1.0")
      */
     private $client;
 
@@ -67,7 +106,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -76,7 +115,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -85,16 +124,17 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
+     * @Assert\Email(groups={"Create"},message="The email {{ value }} is not a valid email.")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */

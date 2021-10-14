@@ -86,4 +86,10 @@ abstract class AbstractRepository extends ServiceEntityRepository
         return $pager;
     }
 
+    public function delete($elt)
+    {
+        $qb = $this->createQueryBuilder("e")->delete()->where('e.id = :id')->setParameter('id',$elt->getId());
+        $qb->getQuery()->getResult();
+    }
+
 }

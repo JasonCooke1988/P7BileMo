@@ -10,6 +10,7 @@ class Products
     /**
      * @var Pagerfanta
      * @Serializer\Type("array<App\Entity\Product>")
+     * @Serializer\Groups({"list"})
      */
     public $data;
 

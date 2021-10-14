@@ -11,7 +11,7 @@ class Users
     /**
      * @var Pagerfanta
      * @Serializer\Type("array<App\Entity\User>")
-     * @Serializer\Groups({"list"})
+     * @Serializer\Groups({"list","listClient"})
      */
     public $data;
 

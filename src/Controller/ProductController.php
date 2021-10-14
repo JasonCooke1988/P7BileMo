@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Product;
 use App\Representation\Products;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
@@ -11,65 +12,31 @@ class ProductController extends AbstractFOSRestController
 {
 
     /**
-     * @Rest\Get("/api/products", name="app_product_show")
-     * @Rest\QueryParam(
-     *     name="name",
-     *     requirements="[a-zA-Z 0-9]+",
-     *     nullable=true,
-     *     description="The name to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="order_by",
-     *     requirements="[a-zA-Z 0-9]+",
-     *     default="name",
-     *     description="Sort order by this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="min_price",
-     *     requirements="\d+",
-     *     description="Products mast have a price of minimum this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="max_price",
-     *     requirements="\d+",
-     *     description="Products mast have a price of maximum this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="price",
-     *     requirements="\d+",
-     *     description="The price to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="min_stock",
-     *     requirements="\d+",
-     *     description="Products mast have a stock of minimum this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="max_stock",
-     *     requirements="\d+",
-     *     description="Products mast have a stock of maximum this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of products per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
-     * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\Get(path="/api/products/{id}",name="app_product_show",requirements={"id"="\d+"})
+     * @Rest\View(statusCode = 200, serializerGroups={"detail"})
      */
-    public function showAction(ParamFetcherInterface $paramFetcher): Products
+    public function showAction(Product $product): Product
+    {
+        return $product;
+    }
+
+    /**
+     * @Rest\Get("/api/products", name="app_product_list")
+     * @Rest\QueryParam(name="name",requirements="[a-zA-Z 0-9]+",nullable=true,description="The name to search for.")
+     * @Rest\QueryParam(name="order",requirements="asc|desc",default="asc",description="Sort order (asc or desc)")
+     * @Rest\QueryParam(name="order_by",requirements="[a-zA-Z 0-9]+",default="name",description="Sort order by this value.")
+     * @Rest\QueryParam(name="min_price",requirements="\d+",description="Products mast have a price of minimum this value.")
+     * @Rest\QueryParam(name="max_price",requirements="\d+",description="Products mast have a price of maximum this value.")
+     * @Rest\QueryParam(name="price",requirements="\d+",description="The price to search for.")
+     * @Rest\QueryParam(name="min_stock",requirements="\d+",description="Products mast have a stock of minimum this value.")
+     * @Rest\QueryParam(name="max_stock",requirements="\d+",description="Products mast have a stock of maximum this value.")
+     * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of products per page.")
+     * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
+     * @Rest\View(statusCode = 200, serializerGroups={"list"})
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Products
+     */
+    public function listAction(ParamFetcherInterface $paramFetcher): Products
     {
 
         $keywords = array(

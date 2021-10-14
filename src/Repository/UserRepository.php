@@ -16,9 +16,28 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class UserRepository extends AbstractRepository
 {
+
+    /**
+     * @var \Doctrine\Persistence\ObjectManager
+     */
+    private $manager;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+
+        $this->manager = $registry->getManager();
+    }
+
+    public function create($user, $client)
+    {
+        $user->setClient($client);
+        $user->setCreatedAt(new \DateTimeImmutable('now'));
+
+        $this->manager->persist($user);
+        $this->manager->flush();
+
+        return $user;
     }
 
     // /**
