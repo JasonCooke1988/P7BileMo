@@ -4,16 +4,41 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Representation\Products;
+use App\Services\ProductService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 class ProductController extends AbstractFOSRestController
 {
 
     /**
+     * @var ProductService
+     */
+    private $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
+    /**
      * @Rest\Get(path="/api/products/{id}",name="app_product_show",requirements={"id"="\d+"})
      * @Rest\View(statusCode = 200, serializerGroups={"detail"})
+     * @Cache(lastModified="product.getUpdatedAt()", Etag="'Product' ~ product.getId() ~ product.getUpdatedAt()")
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a User list associated to the requested Client",
+     *     @Model(type=Product::class, groups={"detail"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="Product")
      */
     public function showAction(Product $product): Product
     {
@@ -33,6 +58,16 @@ class ProductController extends AbstractFOSRestController
      * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of products per page.")
      * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
      * @Rest\View(statusCode = 200, serializerGroups={"list"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a User list associated to the requested Client",
+     *     @Model(type=Product::class, groups={"list"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="Product")
      * @param ParamFetcherInterface $paramFetcher
      * @return Products
      */
@@ -48,7 +83,7 @@ class ProductController extends AbstractFOSRestController
             'max_stock' => $paramFetcher->get('max_stock'),
         );
 
-        $pager = $this->getDoctrine()->getRepository('App:Product')->search(
+        $pager = $this->productService->search(
             $keywords,
             $paramFetcher->get('order_by'),
             $paramFetcher->get('order'),

@@ -2,11 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Client;
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,25 +16,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserRepository extends AbstractRepository
 {
 
-    /**
-     * @var \Doctrine\Persistence\ObjectManager
-     */
-    private $manager;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
-
-        $this->manager = $registry->getManager();
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function create($user, $client)
     {
         $user->setClient($client);
         $user->setCreatedAt(new \DateTimeImmutable('now'));
 
-        $this->manager->persist($user);
-        $this->manager->flush();
+        $this->_em->persist($user);
+        $this->_em->flush();
 
         return $user;
     }

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Client;
+use App\Services\ResetAutoIncrement;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -18,11 +19,16 @@ class ClientFixtures extends Fixture
     public const ORANGE_CLIENT_REFERENCE = "orange-client";
 
     private $passwordHasher;
+    /**
+     * @var ResetAutoIncrement
+     */
+    private $resetAutoIncrement;
 
 
-    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    public function __construct(UserPasswordHasherInterface $passwordHasher, ResetAutoIncrement $resetAutoIncrement)
     {
         $this->passwordHasher = $passwordHasher;
+        $this->resetAutoIncrement = $resetAutoIncrement;
     }
 
 
@@ -31,6 +37,8 @@ class ClientFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
+        $this->resetAutoIncrement->reset('App:Client');
+
         $args = [
             [
                 'name' => 'Amazon',

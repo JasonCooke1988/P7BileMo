@@ -88,8 +88,15 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     public function delete($elt)
     {
-        $qb = $this->createQueryBuilder("e")->delete()->where('e.id = :id')->setParameter('id',$elt->getId());
+        $qb = $this->createQueryBuilder("e")->delete()->where('e.id = :id')->setParameter('id', $elt->getId());
         $qb->getQuery()->getResult();
+    }
+
+    public function resetAutoIncrement()
+    {
+        $array = explode('\\', $this->_entityName);
+        $entity = end($array);
+        $this->_em->getConnection()->executeQuery('ALTER TABLE '.$entity.' AUTO_INCREMENT = 1;');
     }
 
 }

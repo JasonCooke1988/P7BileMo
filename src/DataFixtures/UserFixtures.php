@@ -5,18 +5,31 @@ namespace App\DataFixtures;
 
 
 use App\Entity\User;
+use App\Services\ResetAutoIncrement;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture implements DependentFixtureInterface
 {
+    /**
+     * @var ResetAutoIncrement
+     */
+    private $resetAutoIncrement;
+
+    public function __construct(ResetAutoIncrement $resetAutoIncrement)
+    {
+        $this->resetAutoIncrement = $resetAutoIncrement;
+    }
 
     /**
      * @inheritDoc
      */
     public function load(ObjectManager $manager)
     {
+        $this->resetAutoIncrement->reset('App:User');
 
         $amazon = $this->getReference(ClientFixtures::AMAZON_CLIENT_REFERENCE);
         $ebay = $this->getReference(ClientFixtures::EBAY_CLIENT_REFERENCE);

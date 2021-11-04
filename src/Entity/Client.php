@@ -18,7 +18,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @Serializer\Expose()
-     * @Serializer\Groups({"list", "detail"})
+     * @Serializer\Groups({"list", "detail", "listClient","all"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -27,7 +27,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @Serializer\Expose()
-     * @Serializer\Groups({"list", "detail"})
+     * @Serializer\Groups({"list", "detail", "listClient","all"})
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
@@ -44,6 +44,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
+     * @Serializer\Groups({"listClient","all"})
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="client")
      */
     private $users;

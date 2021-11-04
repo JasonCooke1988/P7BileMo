@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "app_user_list",
  *          absolute = true
  *      ),
- *     exclusion = @Hateoas\Exclusion(groups={"detail","listClient"})
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","listClient","all"})
  * )
  * @Hateoas\Relation (
  *     "listByClient",
@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          parameters={"id" = "expr(object.getClient().getId())"},
  *          absolute = true
  *      ),
- *     exclusion = @Hateoas\Exclusion(groups={"detail","list"})
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list","all"})
  * )
  * @Hateoas\Relation (
  *     "self",
@@ -38,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          parameters={"id" = "expr(object.getId())"},
  *          absolute = true
  *      ),
- *     exclusion = @Hateoas\Exclusion(groups={"list","detail","listClient"}),
+ *     exclusion = @Hateoas\Exclusion(groups={"list","listClient","all"}),
  * )
  * @Hateoas\Relation (
  *     "delete",
@@ -47,7 +47,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          parameters={"id" = "expr(object.getId())"},
  *          absolute = true
  *      ),
- *     exclusion = @Hateoas\Exclusion(groups={"list","detail","listClient"})
+ *     exclusion = @Hateoas\Exclusion(groups={"list","detail","listClient","all"})
  * )
  * @Hateoas\Relation (
  *     "create",
@@ -56,12 +56,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          absolute = true,
  *          parameters={"id" = "expr(object.getClient().getId())"},
  *      ),
- *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient"})
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient","all"})
  * )
  * @Hateoas\Relation (
  *     "client",
  *     embedded = "expr(object.getClient())",
- *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient"})
+ *     exclusion = @Hateoas\Exclusion(groups={"detail","list","listClient","all"})
  * )
  */
 class User
@@ -71,7 +71,7 @@ class User
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Serializer\Expose()
-     * @Serializer\Groups({"list","listClient","detail"})
+     * @Serializer\Groups({"list","listClient","detail","all"})
      * @Serializer\Since("1.0")
      */
     private $id;
@@ -79,7 +79,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"list","listClient","detail"})
+     * @Serializer\Groups({"list","listClient","detail","all"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -106,7 +106,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"detail"})
+     * @Serializer\Groups({"detail","all"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -115,7 +115,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"detail"})
+     * @Serializer\Groups({"detail","all"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -124,7 +124,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"detail"})
+     * @Serializer\Groups({"detail","all"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      * @Assert\Email(groups={"Create"},message="The email {{ value }} is not a valid email.")
@@ -134,7 +134,7 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
-     * @Serializer\Groups({"detail"})
+     * @Serializer\Groups({"detail","all"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */

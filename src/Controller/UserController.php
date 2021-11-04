@@ -7,38 +7,47 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\User;
 use App\Exception\ResourceValidationException;
-use App\Repository\UserRepository;
 use App\Representation\Users;
-use App\Token\ClientService;
+use App\Services\UserService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 class UserController extends AbstractFOSRestController
 {
-    /**
-     * @var ClientService
-     */
-    private $clientService;
+
 
     /**
-     * @var UserRepository
+     * @var UserService
      */
-    private $repository;
+    private $userService;
 
-    public function __construct(ClientService $clientService, UserRepository $repository)
+    public function __construct(UserService $userService)
     {
-        $this->clientService = $clientService;
-        $this->repository = $repository;
+        $this->userService = $userService;
     }
 
     /**
      * @Rest\Get(path="/api/users/{id}",name="app_user_show",requirements={"id"="\d+"})
      * @Rest\View(statusCode = 200, serializerGroups={"detail"})
+     * @Cache(lastModified="user.getUpdatedAt()", Etag="'User' ~ user.getId() ~ user.getUpdatedAt()")
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns the requested user",
+     *     @Model(type=User::class, groups={"detail"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      */
     public function showAction(User $user): User
     {
@@ -57,6 +66,16 @@ class UserController extends AbstractFOSRestController
      * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of users per page.")
      * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
      * @Rest\View(statusCode = 200, serializerGroups={"list"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns user list",
+     *     @Model(type=User::class, groups={"list"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
      */
@@ -69,7 +88,7 @@ class UserController extends AbstractFOSRestController
             'email' => $paramFetcher->get('email'),
             'postCode' => $paramFetcher->get('post_code'),
         );
-        $pager = $this->getDoctrine()->getRepository('App:User')->search(
+        $pager = $this->userService->search(
             $keywords,
             $paramFetcher->get('order_by'),
             $paramFetcher->get('order'),
@@ -92,6 +111,16 @@ class UserController extends AbstractFOSRestController
      * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of users per page.")
      * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
      * @Rest\View(statusCode = 200, serializerGroups={"listClient"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a User list associated to the requested Client",
+     *     @Model(type=User::class, groups={"listClient"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      * @param Client $client
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
@@ -106,7 +135,7 @@ class UserController extends AbstractFOSRestController
             'email' => $paramFetcher->get('email'),
             'postCode' => $paramFetcher->get('post_code'),
         );
-        $pager = $this->getDoctrine()->getRepository('App:User')->search(
+        $pager = $this->userService->search(
             $keywords,
             $paramFetcher->get('order_by'),
             $paramFetcher->get('order'),
@@ -130,7 +159,17 @@ class UserController extends AbstractFOSRestController
      *     options={
      *          "validator"={"groups"="Create"}
      *     })
-     * @Rest\View(statusCode = 201, serializerGroups={"detail"})
+     * @Rest\View(statusCode = 201, serializerGroups={"all"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Returns the newly created User",
+     *     @Model(type=User::class, groups={"listClient"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      * @throws ResourceValidationException
      */
     public function createAction(Client $client, User $user, ConstraintViolationList $violations): User
@@ -144,7 +183,7 @@ class UserController extends AbstractFOSRestController
 
             throw new ResourceValidationException($message);
         }
-        return $this->repository->create($user, $client);
+        return $this->userService->create($user, $client);
     }
 
     /**
@@ -154,12 +193,21 @@ class UserController extends AbstractFOSRestController
      *     requirements={"id"="\d+"}
      * )
      * @Rest\View(statusCode = 200)
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a confirmation message that the User has been deleted"
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      */
     public function deleteAction(User $user): Response
     {
         $view = View::create()->setData(['message' => sprintf("User with id '%s' has been deleted.", $user->getId())]);
 
-        $this->repository->delete($user);
+        $this->userService->delete($user);
 
         return $this->getViewHandler()->handle($view);
     }
