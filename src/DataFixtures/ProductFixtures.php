@@ -5,16 +5,30 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Product;
+use App\Services\ResetAutoIncrement;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class ProductFixtures extends Fixture
 {
     /**
+     * @var ResetAutoIncrement
+     */
+    private $resetAutoIncrement;
+
+    public function __construct(ResetAutoIncrement $resetAutoIncrement)
+    {
+        $this->resetAutoIncrement = $resetAutoIncrement;
+    }
+
+    /**
      * @inheritDoc
      */
     public function load(ObjectManager $manager)
     {
+
+        $this->resetAutoIncrement->reset('App:Product');
+
         $args = [
             [
                 'name' => 'Iphone 1',

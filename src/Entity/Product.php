@@ -16,8 +16,18 @@ use Hateoas\Configuration\Annotation as Hateoas;
  *     "self",
  *     href = @Hateoas\Route(
  *          "app_product_show",
+ *          parameters={"id" = "expr(object.getId())"},
  *          absolute = true
- *      )
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"list"})
+ * )
+ * @Hateoas\Relation(
+ *     "list",
+ *     href = @Hateoas\Route(
+ *          "app_product_list",
+ *          absolute = true
+ *      ),
+ *     exclusion = @Hateoas\Exclusion(groups={"detail"})
  * )
  */
 class Product
@@ -27,6 +37,7 @@ class Product
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Serializer\Expose()
+     * @Serializer\Groups({"list","detail"})
      * @Serializer\Since("1.0")
      */
     private $id;
@@ -34,6 +45,7 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Expose()
+     * @Serializer\Groups({"list","detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -42,6 +54,7 @@ class Product
     /**
      * @ORM\Column(type="float")
      * @Serializer\Expose()
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -50,6 +63,7 @@ class Product
     /**
      * @ORM\Column(type="text")
      * @Serializer\Expose()
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */
@@ -58,6 +72,7 @@ class Product
     /**
      * @ORM\Column(type="integer")
      * @Serializer\Expose()
+     * @Serializer\Groups({"detail"})
      * @Serializer\Since("1.0")
      * @Assert\NotBlank(groups={"Create"})
      */

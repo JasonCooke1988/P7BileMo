@@ -4,16 +4,21 @@ namespace App\Entity;
 
 use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\ExclusionPolicy;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 
 /**
+ * @ExclusionPolicy("all")
  * @ORM\Entity(repositoryClass=ClientRepository::class)
  */
 class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list", "detail", "listClient","all"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -21,6 +26,8 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
+     * @Serializer\Expose()
+     * @Serializer\Groups({"list", "detail", "listClient","all"})
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $username;
@@ -37,6 +44,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
+     * @Serializer\Groups({"listClient","all"})
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="client")
      */
     private $users;

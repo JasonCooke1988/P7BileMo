@@ -13,8 +13,8 @@ services:
     #    JMS\Serializer\SerializerInterface: '@jms_serializer'
     app.exception_subscriber:
         class: App\EventSubscriber\ExceptionListener
-#        arguments:
-#            - '@jms_serializer'
+        arguments:
+            - '@jms_serializer'
         tags:
             - { name: kernel.event_subscriber }
     app.normalizer.resource_validation_exception:

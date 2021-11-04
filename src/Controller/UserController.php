@@ -4,95 +4,138 @@
 namespace App\Controller;
 
 
+use App\Entity\Client;
 use App\Entity\User;
 use App\Exception\ResourceValidationException;
 use App\Representation\Users;
-use App\Token\ClientService;
+use App\Services\UserService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
-use JMS\Serializer\Annotation as Serializer;
-use JMS\Serializer\SerializationContext;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
 
 class UserController extends AbstractFOSRestController
 {
-    /**
-     * @var ClientService
-     */
-    private $clientService;
 
-    public function __construct(ClientService $clientService)
+
+    /**
+     * @var UserService
+     */
+    private $userService;
+
+    public function __construct(UserService $userService)
     {
-        $this->clientService = $clientService;
+        $this->userService = $userService;
     }
 
     /**
-     * @Rest\Get(path="/api/users/{id}",
-     *     name="app_user_show",
-     *     requirements={"id"="\d+"}
+     * @Rest\Get(path="/api/users/{id}",name="app_user_show",requirements={"id"="\d+"})
+     * @Rest\View(statusCode = 200, serializerGroups={"detail"})
+     * @Cache(lastModified="user.getUpdatedAt()", Etag="'User' ~ user.getId() ~ user.getUpdatedAt()")
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns the requested user",
+     *     @Model(type=User::class, groups={"detail"})
      * )
-     * @Rest\View(statusCode = 200, serializerGroups={"list"})
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      */
-    public function showAction(User $user)
+    public function showAction(User $user): User
     {
-        $client = $this->clientService->getCurrentClient();
-
-        if ($client->getId() === $user->getClient()->getId()) {
-            return $user;
-        } else {
-            throw new NotFoundHttpException("You are not authorized to delete this user.");
-        }
+        return $user;
     }
 
     /**
      * @Rest\Get("/api/users", name="app_user_list")
-     * @Rest\QueryParam(
-     *     name="name",
-     *     requirements="[a-zA-Z 0-9]*",
-     *     nullable=true,
-     *     description="The name to search for."
-     * )
-     * @Rest\QueryParam(
-     *     name="order",
-     *     requirements="asc|desc",
-     *     default="asc",
-     *     description="Sort order (asc or desc)"
-     * )
-     * @Rest\QueryParam(
-     *     name="order_by",
-     *     requirements="[a-zA-Z 0-9]+",
-     *     default="name",
-     *     description="Sort order by this value."
-     * )
-     * @Rest\QueryParam(
-     *     name="limit",
-     *     requirements="\d+",
-     *     default="15",
-     *     description="Max number of users per page."
-     * )
-     * @Rest\QueryParam(
-     *     name="offset",
-     *     requirements="\d+",
-     *     default="1",
-     *     description="The pagination offset"
-     * )
+     * @Rest\QueryParam(name="name",requirements="[a-zA-Z 0-9]*",nullable=true,description="The name to search for.")
+     * @Rest\QueryParam(name="adresse",requirements="[a-zA-Z 0-9]*",nullable=true,description="The adresse to search for.")
+     * @Rest\QueryParam(name="city",requirements="[a-zA-Z 0-9]*",nullable=true,description="The city to search for.")
+     * @Rest\QueryParam(name="email",requirements="[a-zA-Z 0-9]*",nullable=true,description="The email to search for.")
+     * @Rest\QueryParam(name="post_code",requirements="[a-zA-Z 0-9]*",nullable=true,description="The post code to search for.")
+     * @Rest\QueryParam(name="order",requirements="asc|desc",default="asc",description="Sort order (asc or desc)")
+     * @Rest\QueryParam(name="order_by",requirements="[a-zA-Z 0-9]+",default="name",description="Sort order by this value.")
+     * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of users per page.")
+     * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
      * @Rest\View(statusCode = 200, serializerGroups={"list"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns user list",
+     *     @Model(type=User::class, groups={"list"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
      */
     public function listAction(ParamFetcherInterface $paramFetcher): Users
     {
         $keywords = array(
-            'name' => $paramFetcher->get('name')
+            'name' => $paramFetcher->get('name'),
+            'adresse' => $paramFetcher->get('adresse'),
+            'city' => $paramFetcher->get('city'),
+            'email' => $paramFetcher->get('email'),
+            'postCode' => $paramFetcher->get('post_code'),
+        );
+        $pager = $this->userService->search(
+            $keywords,
+            $paramFetcher->get('order_by'),
+            $paramFetcher->get('order'),
+            $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
         );
 
-        $client = $this->clientService->getCurrentClient();
+        return new Users($pager);
+    }
 
-        $pager = $this->getDoctrine()->getRepository('App:User')->search(
+    /**
+     * @Rest\Get("/api/client/{id}/users", name="app_client_user_list")
+     * @Rest\QueryParam(name="name",requirements="[a-zA-Z 0-9]*",nullable=true,description="The name to search for.")
+     * @Rest\QueryParam(name="adresse",requirements="[a-zA-Z 0-9]*",nullable=true,description="The adresse to search for.")
+     * @Rest\QueryParam(name="city",requirements="[a-zA-Z 0-9]*",nullable=true,description="The city to search for.")
+     * @Rest\QueryParam(name="email",requirements="[a-zA-Z 0-9]*",nullable=true,description="The email to search for.")
+     * @Rest\QueryParam(name="post_code",requirements="[a-zA-Z 0-9]*",nullable=true,description="The post code to search for.")
+     * @Rest\QueryParam(name="order",requirements="asc|desc",default="asc",description="Sort order (asc or desc)")
+     * @Rest\QueryParam(name="order_by",requirements="[a-zA-Z 0-9]+",default="name",description="Sort order by this value.")
+     * @Rest\QueryParam(name="limit",requirements="\d+",default="15",description="Max number of users per page.")
+     * @Rest\QueryParam(name="offset",requirements="\d+",default="1",description="The pagination offset")
+     * @Rest\View(statusCode = 200, serializerGroups={"listClient"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a User list associated to the requested Client",
+     *     @Model(type=User::class, groups={"listClient"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
+     * @param Client $client
+     * @param ParamFetcherInterface $paramFetcher
+     * @return Users
+     */
+    public function listByClientAction(Client $client, ParamFetcherInterface $paramFetcher): Users
+    {
+
+        $keywords = array(
+            'name' => $paramFetcher->get('name'),
+            'adresse' => $paramFetcher->get('adresse'),
+            'city' => $paramFetcher->get('city'),
+            'email' => $paramFetcher->get('email'),
+            'postCode' => $paramFetcher->get('post_code'),
+        );
+        $pager = $this->userService->search(
             $keywords,
             $paramFetcher->get('order_by'),
             $paramFetcher->get('order'),
@@ -100,27 +143,37 @@ class UserController extends AbstractFOSRestController
             $paramFetcher->get('offset'),
             $client
         );
-
         return new Users($pager);
     }
 
+
     /**
      * @Rest\Post(
-     *     path="/api/users/create",
-     *     name="app_user_create"
+     *     path="/api/client/{id}/users/create",
+     *     name="app_user_create",
+     *     requirements={"id"="\d+"}
      * )
-     * @Rest\View(statusCode = 201)
      * @ParamConverter(
      *     "user",
      *     converter="fos_rest.request_body",
      *     options={
      *          "validator"={"groups"="Create"}
      *     })
+     * @Rest\View(statusCode = 201, serializerGroups={"all"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Returns the newly created User",
+     *     @Model(type=User::class, groups={"listClient"})
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      * @throws ResourceValidationException
      */
-    public function createAction(User $user, ConstraintViolationList $violations)
+    public function createAction(Client $client, User $user, ConstraintViolationList $violations): User
     {
-
         if (count($violations)) {
             $message = 'The JSON sent contains invalid data. Here are the errors you need to correct :';
 
@@ -130,18 +183,7 @@ class UserController extends AbstractFOSRestController
 
             throw new ResourceValidationException($message);
         }
-
-        $client = $this->clientService->getCurrentClient();
-
-        $user->setCreatedAt(new \DateTimeImmutable('now'));
-        $user->setClient($client);
-
-        $em = $this->getDoctrine()->getManager();
-
-        $em->persist($user);
-        $em->flush();
-
-        return $user;
+        return $this->userService->create($user, $client);
     }
 
     /**
@@ -151,24 +193,23 @@ class UserController extends AbstractFOSRestController
      *     requirements={"id"="\d+"}
      * )
      * @Rest\View(statusCode = 200)
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns a confirmation message that the User has been deleted"
+     * )
+     * @OA\Response(
+     *     response=400,
+     *     description="Access Denied"
+     * )
+     * @OA\Tag(name="User")
      */
-    public function deleteAction(User $user, ParamFetcherInterface $paramFetcher)
+    public function deleteAction(User $user): Response
     {
+        $view = View::create()->setData(['message' => sprintf("User with id '%s' has been deleted.", $user->getId())]);
 
-        $client = $this->clientService->getCurrentClient();
+        $this->userService->delete($user);
 
-        if ($client->getId() === $user->getClient()->getId()) {
-
-            $view = View::create()->setData(['message' => sprintf("User with id '%s' has been deleted.", $user->getId())]);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($user);
-            $em->flush();
-
-            return $this->getViewHandler()->handle($view);
-        } else {
-            throw new NotFoundHttpException("You are not authorized to delete this user.");
-        }
+        return $this->getViewHandler()->handle($view);
     }
 
 }
