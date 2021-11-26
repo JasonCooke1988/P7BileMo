@@ -1,7 +1,9 @@
 # P7BileMo
+
 Seventh project in my PHP / Symfony developper course with OpenClassrooms
 
 ## Installation
+
 Clone the repository.
 
 In the terminal cd to project root directory.
@@ -50,12 +52,14 @@ JWT_PASSPHRASE=PASSPHRASE
 ###< lexik/jwt-authentication-bundle ###
 ```
 
-##Generate the SSL keys:
+## Generate the SSL keys:
+
 `php bin/console lexik:jwt:generate-keypair`
 
 Your keys will land in config/jwt/private.pem and config/jwt/public.pem (unless you configured a different path).
 
-##Setup
+## Setup
+
 Use doctrine to migrate database :
 
 `php bin/console doctrine:migrations:migrate`
@@ -73,17 +77,25 @@ From terminal `symfony server:start`
 1. bin
 2. config
 3. migrations
-4. postman   
+4. postman
 5. public
 6. src
 7. templates
 8. var
 9. vendor
 
-##Postman collection
+## Postman collection
+
 A postman collection has been provided in /postman, import the collection.
 
 Use the 'Get JWT' endpoint to generate a JWT token to use in the 'Authorization' header for each endpoint.
 
+## API Doc
+
+API documentation is available at /doc URI. Like the API you need to use the 'GET JWT' endpoint to generate a token
+using a client credentials (ex: amazon / test), copy the token string from the response, click 'Authorize' button and
+paste the token string in the input.
+
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)

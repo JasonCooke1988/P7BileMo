@@ -51,7 +51,7 @@ class ExceptionListener implements EventSubscriberInterface
         $this->normalizers[] = $normalizer;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::EXCEPTION => [['processException', 255]]
