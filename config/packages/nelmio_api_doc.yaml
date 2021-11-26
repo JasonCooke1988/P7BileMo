@@ -4,6 +4,54 @@ nelmio_api_doc:
             title: BileMo
             description: The BileMo API
             version: 1.0.0
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+        paths:
+            /api/login_check:
+                post:
+                    description: Authentification to get JWT token
+                    tags:
+                    - Get JWT
+                    requestBody:
+                        required: true
+                        content:
+                            application/json:
+                                schema:
+                                    type: object
+                                    required:
+                                        - username
+                                        - password
+                                    properties:
+                                        username:
+                                            type: string
+                                        password:
+                                            type: string
+                    responses:
+                        '200':
+                            description: Successfully authenticated
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            token:
+                                                type: string
+                        '401':
+                            description: Invalid credentials
+                            content:
+                                application/json:
+                                    schema:
+                                        type: object
+                                        properties:
+                                            code:
+                                                type: integer
+                                            message:
+                                                type: string
+
     areas: # to filter documented areas
         path_patterns:
             - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

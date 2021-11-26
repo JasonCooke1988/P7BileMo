@@ -8,6 +8,7 @@ use App\Services\ProductService;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use OpenApi\Annotations as OA;
@@ -28,17 +29,18 @@ class ProductController extends AbstractFOSRestController
     /**
      * @Rest\Get(path="/api/products/{id}",name="app_product_show",requirements={"id"="\d+"})
      * @Rest\View(statusCode = 200, serializerGroups={"detail"})
-     * @Cache(lastModified="product.getUpdatedAt()", Etag="'Product' ~ product.getId() ~ product.getUpdatedAt()")
+     * @Cache(lastModified="product.getUpdatedAt()", Etag="'Product' ~ product.getId() ~ product.getUpdatedAt()", expires="+1week")
      * @OA\Response(
      *     response=200,
      *     description="Returns a User list associated to the requested Client",
      *     @Model(type=Product::class, groups={"detail"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
      * @OA\Tag(name="Product")
+     * @Security(name="Bearer")
      */
     public function showAction(Product $product): Product
     {
@@ -64,10 +66,11 @@ class ProductController extends AbstractFOSRestController
      *     @Model(type=Product::class, groups={"list"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
      * @OA\Tag(name="Product")
+     * @Security(name="Bearer")
      * @param ParamFetcherInterface $paramFetcher
      * @return Products
      */

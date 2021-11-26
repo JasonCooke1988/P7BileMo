@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,16 +38,17 @@ class UserController extends AbstractFOSRestController
     /**
      * @Rest\Get(path="/api/users/{id}",name="app_user_show",requirements={"id"="\d+"})
      * @Rest\View(statusCode = 200, serializerGroups={"detail"})
-     * @Cache(lastModified="user.getUpdatedAt()", Etag="'User' ~ user.getId() ~ user.getUpdatedAt()")
+     * @Cache(lastModified="user.getUpdatedAt()", Etag="'User' ~ user.getId() ~ user.getUpdatedAt()", expires="+1week")
      * @OA\Response(
      *     response=200,
      *     description="Returns the requested user",
      *     @Model(type=User::class, groups={"detail"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
+     * @Security(name="Bearer")
      * @OA\Tag(name="User")
      */
     public function showAction(User $user): User
@@ -72,10 +74,11 @@ class UserController extends AbstractFOSRestController
      *     @Model(type=User::class, groups={"list"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
      * @OA\Tag(name="User")
+     * @Security(name="Bearer")
      * @param ParamFetcherInterface $paramFetcher
      * @return Users
      */
@@ -117,9 +120,10 @@ class UserController extends AbstractFOSRestController
      *     @Model(type=User::class, groups={"listClient"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
+     * @Security(name="Bearer")
      * @OA\Tag(name="User")
      * @param Client $client
      * @param ParamFetcherInterface $paramFetcher
@@ -166,10 +170,11 @@ class UserController extends AbstractFOSRestController
      *     @Model(type=User::class, groups={"listClient"})
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
      * @OA\Tag(name="User")
+     * @Security(name="Bearer")
      * @throws ResourceValidationException
      */
     public function createAction(Client $client, User $user, ConstraintViolationList $violations): User
@@ -192,15 +197,16 @@ class UserController extends AbstractFOSRestController
      *     name="app_user_delete",
      *     requirements={"id"="\d+"}
      * )
-     * @Rest\View(statusCode = 200)
+     * @Rest\View(statusCode = 204)
      * @OA\Response(
-     *     response=200,
+     *     response=204,
      *     description="Returns a confirmation message that the User has been deleted"
      * )
      * @OA\Response(
-     *     response=400,
+     *     response=401,
      *     description="Access Denied"
      * )
+     * @Security(name="Bearer")
      * @OA\Tag(name="User")
      */
     public function deleteAction(User $user): Response

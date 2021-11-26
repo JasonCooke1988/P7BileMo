@@ -9,9 +9,9 @@ fos_rest:
   exception:
     enabled: true
     messages:
-      {App\Exception\ResourceValidationException: true}
+      App\Exception\ResourceValidationException: true
     codes:
-      { App\Exception\ResourceValidationException: 400 }
+      App\Exception\ResourceValidationException: 400
   body_converter:
     enabled: true
     validate: true
