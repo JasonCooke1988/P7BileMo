@@ -12,16 +12,16 @@ class ResetAutoIncrement
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private $entityManager;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
 
     public function reset(string $entity)
     {
-        $this->em->getRepository($entity)->resetAutoIncrement();
+        $this->entityManager->getRepository($entity)->resetAutoIncrement();
     }
 }

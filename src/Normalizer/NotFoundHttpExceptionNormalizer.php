@@ -12,6 +12,11 @@ class NotFoundHttpExceptionNormalizer extends AbstractNormalizer
 
         $result['code'] = Response::HTTP_NOT_FOUND;
 
+        $result['body'] = [
+            'code' => Response::HTTP_NOT_FOUND,
+            'message' => $exception->getMessage()
+        ];
+
         if ($exception->getMessage() === "App\Entity\User object not found by the @ParamConverter annotation.") {
             $result['body'] = [
                 'code' => Response::HTTP_NOT_FOUND,
@@ -27,13 +32,9 @@ class NotFoundHttpExceptionNormalizer extends AbstractNormalizer
                 'code' => Response::HTTP_NOT_FOUND,
                 'message' => "The client you are trying to access does not exist."
             ];
-        } else {
-            $result['body'] = [
-                'code' => Response::HTTP_NOT_FOUND,
-                'message' => $exception->getMessage()
-            ];
         }
 
         return $result;
+
     }
 }
