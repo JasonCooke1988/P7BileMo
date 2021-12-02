@@ -52,7 +52,7 @@ JWT_PASSPHRASE=PASSPHRASE
 ###< lexik/jwt-authentication-bundle ###
 ```
 
-## Generate the SSL keys:
+## Generate the SSL keys
 
 `php bin/console lexik:jwt:generate-keypair`
 
@@ -74,15 +74,15 @@ From terminal `symfony server:start`
 
 ## Structure
 
-1. bin
-2. config
-3. migrations
-4. postman
-5. public
-6. src
-7. templates
-8. var
-9. vendor
+1.  bin
+2.  config
+3.  migrations
+4.  postman
+5.  public
+6.  src
+7.  templates
+8.  var
+9.  vendor
 
 ## Postman collection
 

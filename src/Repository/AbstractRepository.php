@@ -14,12 +14,12 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     public function search($terms, $orderBy, $order, $limit, $offset, $client = null): Pagerfanta
     {
-        $qb = $this
+        $queryBuilder = $this
             ->createQueryBuilder('e')
             ->select('e')
             ->orderBy('e.' . $orderBy, $order);
 
-        $i = 0;
+        $count = 0;
         $like = '';
 
         foreach ($terms as $key => $term) {
@@ -42,29 +42,29 @@ abstract class AbstractRepository extends ServiceEntityRepository
                         break;
                 }
 
-                if ($i === 0) {
-                    $qb
-                        ->where('e.' . $key . ' ' . $comparaison . ' ?' . $i);
+                if ($count === 0) {
+                    $queryBuilder
+                        ->where('e.' . $key . ' ' . $comparaison . ' ?' . $count);
                 } else {
-                    $qb
-                        ->andWhere('e.' . $key . ' ' . $comparaison . ' ?' . $i);
+                    $queryBuilder
+                        ->andWhere('e.' . $key . ' ' . $comparaison . ' ?' . $count);
                 }
 
-                $qb->setParameter($i, $like . $term . $like);
-                $i++;
+                $queryBuilder->setParameter($count, $like . $term . $like);
+                $count++;
             }
         }
 
         /** @var Client $client */
-        if (is_a($client, Client::class) && $i === 0) {
-            $qb->where('e.client = :c')
+        if (is_a($client, Client::class) && $count === 0) {
+            $queryBuilder->where('e.client = :c')
                 ->setParameter('c', $client);
-        } elseif (is_a($client, Client::class) && $i != 0) {
-            $qb->andWhere('e.client = :c')
+        } elseif (is_a($client, Client::class) && $count != 0) {
+            $queryBuilder->andWhere('e.client = :c')
                 ->setParameter('c', $client);
         }
 
-        $array = $qb->getQuery()->getResult();
+        $array = $queryBuilder->getQuery()->getResult();
 
         return $this->paginate($array, $limit, $offset);
     }
@@ -88,8 +88,8 @@ abstract class AbstractRepository extends ServiceEntityRepository
 
     public function delete($elt)
     {
-        $qb = $this->createQueryBuilder("e")->delete()->where('e.id = :id')->setParameter('id', $elt->getId());
-        $qb->getQuery()->getResult();
+        $queryBuilder = $this->createQueryBuilder("e")->delete()->where('e.id = :id')->setParameter('id', $elt->getId());
+        $queryBuilder->getQuery()->getResult();
     }
 
     public function resetAutoIncrement()
