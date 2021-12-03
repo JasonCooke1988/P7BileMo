@@ -21,21 +21,21 @@ class UserService
 
     public function search($terms, $orderBy, $order, $limit, $offset, $client = null)
     {
-        return $this->em->getRepository('App:User')->search(
+        return $this->entityManager->getRepository('App:User')->search(
             $terms, $orderBy, $order, $limit, $offset, $client
         );
     }
 
     public function create($user, $client)
     {
-        return $this->em->getRepository('App:User')->create(
+        return $this->entityManager->getRepository('App:User')->create(
             $user, $client
         );
     }
 
     public function delete($user)
     {
-        return $this->em->getRepository('App:User')->delete(
+        return $this->entityManager->getRepository('App:User')->delete(
             $user
         );
     }
